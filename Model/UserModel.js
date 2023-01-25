@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 const userSchema = mongoose.Schema(
   {
@@ -71,6 +72,13 @@ userSchema.pre("save", function (next) {
 
 userSchema.methods.comparePassword = async function (enteredPW, actualPW) {
   return bcrypt.compare(enteredPW, actualPW);
+};
+
+userSchema.methods.generateVerificationToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  this.accountVerificationToken = hashedToken;
+  return token;
 };
 
 userSchema.methods.hasChangedPasswordRecently = function (jwtIssued) {
