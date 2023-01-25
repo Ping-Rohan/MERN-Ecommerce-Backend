@@ -34,7 +34,6 @@ exports.login = catchAsync(async (request, response, next) => {
     httpOnly: true,
   });
 
-  request.user = document;
   response.status(200).json({
     message: "Logged in successfully",
     accessToken,

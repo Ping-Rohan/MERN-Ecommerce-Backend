@@ -51,6 +51,9 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    passwordChangedAt: Date,
+    accountVerificationToken: String,
+    accountVerificationTokenExpires: String,
   },
   { timestamps: true }
 );
@@ -61,8 +64,24 @@ userSchema.pre("save", async function (next) {
   this.confirmPassword = undefined;
 });
 
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) return next();
+  this.passwordChangedAt = Date.now();
+});
+
 userSchema.methods.comparePassword = async function (enteredPW, actualPW) {
   return bcrypt.compare(enteredPW, actualPW);
+};
+
+userSchema.methods.hasChangedPasswordRecently = function (jwtIssued) {
+  if (this.passwordChangedAt) {
+    const passwordChangedTime = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return passwordChangedTime > jwtIssued;
+  }
+  return false;
 };
 
 const User = mongoose.model("User", userSchema);
