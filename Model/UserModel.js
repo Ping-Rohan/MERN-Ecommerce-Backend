@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       default:
-        "https://cdn.vectorstock.com/i/1000x1000/66/14/default-avatar-photo-placeholder-profile-picture-vector-21806614.webp",
+        "https://img.freepik.com/free-photo/indian-business-man-with-crossed-arm-dark-wall_231208-2668.jpg?w=900&t=st=1674902498~exp=1674903098~hmac=6509adf81297c0dd45a9abbadd9e6d0d4bb8c4fe37f014a23e8b73d0722cfbee",
     },
     isAdmin: {
       type: Boolean,

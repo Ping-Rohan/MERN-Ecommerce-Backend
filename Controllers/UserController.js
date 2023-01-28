@@ -37,5 +37,6 @@ exports.login = catchAsync(async (request, response, next) => {
   response.status(200).json({
     message: "Logged in successfully",
     accessToken,
+    document,
   });
 });

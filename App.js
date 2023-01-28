@@ -1,5 +1,6 @@
 const express = require("express");
 const userRoute = require("./Routes/UserRoute");
+const productRoute = require("./Routes/ProductRoute");
 const cors = require("cors");
 const app = express();
 const GlobalErrorHandler = require("./Utils/GlobalErrorHandler");
@@ -10,6 +11,8 @@ app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 
 app.use("/api/v1/users", userRoute);
+app.use("/api/v1/product", productRoute);
+app.use("/", express.static("./Public"));
 
 app.use(GlobalErrorHandler);
 
