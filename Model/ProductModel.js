@@ -17,11 +17,11 @@ const ProductSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please enter product price"],
   },
-  // category: {
-  //   type: mongoose.Schema.ObjectId,
-  //   required: [true, "Product must have category"],
-  //   ref: "Category",
-  // },
+  category: {
+    type: mongoose.Schema.ObjectId,
+    required: [true, "Product must have category"],
+    ref: "Category",
+  },
   stocks: {
     type: Number,
     required: [true, "Please enter your available stocks"],
