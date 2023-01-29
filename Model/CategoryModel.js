@@ -1,12 +1,19 @@
 const mongoose = require("mongoose");
 
+const slugOPT = {
+  separator: "-",
+  lang: "en",
+  truncate: 100,
+};
+
 const CategorySchema = mongoose.Schema({
   categoryName: {
     type: String,
     required: [true, "Category name cannot be empty"],
   },
-  categoryImage: {
+  slug: {
     type: String,
+    required: [true, "Missing slug"],
   },
 });
 

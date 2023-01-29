@@ -13,23 +13,38 @@ const ProductSchema = mongoose.Schema({
     type: String,
     required: [true, "Product must have description"],
   },
+  price: {
+    type: Number,
+    required: [true, "Please enter product price"],
+  },
   // category: {
   //   type: mongoose.Schema.ObjectId,
   //   required: [true, "Product must have category"],
   //   ref: "Category",
   // },
-  // stocks: {
-  //   type: Number,
-  //   required: [true, "Please enter your available stocks"],
-  // },
-  sold: Number,
+  stocks: {
+    type: Number,
+    required: [true, "Please enter your available stocks"],
+  },
+  sold: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
 
-  // store: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: "User",
-  //   required: [true, "Product must belong to store"],
-  // },
-  ratings: Number,
+  store: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: [true, "Product must belong to store"],
+  },
+});
+
+ProductSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "store",
+    select: "fullName",
+  });
+  next();
 });
 
 const Product = mongoose.model("Product", ProductSchema);
