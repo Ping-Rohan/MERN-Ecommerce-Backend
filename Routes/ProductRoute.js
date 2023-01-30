@@ -7,11 +7,15 @@ const upload = require("../Helpers/Multer");
 const resize = require("../Helpers/Sharp.js");
 
 Router.use(ProtectRoutes);
-Router.use(verifyRoles);
-Router.route("/").post(
-  upload.array("image", 5),
-  resize,
-  productController.addProduct
-);
+Router.route("/")
+  .post(
+    verifyRoles,
+    upload.array("image", 5),
+    resize,
+    productController.addProduct
+  )
+  .get(productController.getAllProducts);
+
+Router.route("/:id").get(productController.getProductById);
 
 module.exports = Router;

@@ -17,3 +17,23 @@ exports.addProduct = CatchAsync(async (request, response, next) => {
     product,
   });
 });
+
+exports.getAllProducts = CatchAsync(async (request, response, next) => {
+  const products = await Product.find().populate({
+    path: "category",
+    select: "categoryName",
+  });
+  response.status(200).json({
+    products,
+  });
+});
+
+exports.getProductById = CatchAsync(async (request, response, next) => {
+  const product = await Product.findById(request.params.id).populate({
+    path: "category",
+    select: "categoryName",
+  });
+  response.status(200).json({
+    product,
+  });
+});
