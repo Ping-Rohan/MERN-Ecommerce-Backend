@@ -10,6 +10,7 @@ const CategorySchema = mongoose.Schema({
   categoryName: {
     type: String,
     required: [true, "Category name cannot be empty"],
+    unique: true,
   },
   slug: {
     type: String,
