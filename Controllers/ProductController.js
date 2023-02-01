@@ -23,6 +23,9 @@ exports.getAllProducts = CatchAsync(async (request, response, next) => {
     path: "category",
     select: "categoryName",
   });
+
+  console.log("get all post");
+  console.log(request.cookies.auth);
   response.status(200).json({
     products,
   });

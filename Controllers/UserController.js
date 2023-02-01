@@ -29,10 +29,8 @@ exports.login = catchAsync(async (request, response, next) => {
 
   const accessToken = issueJWT.issueAccessToken({ _id: document._id });
   const refreshToken = issueJWT.issueRefreshToken({ _id: document._id });
-
-  response.cookie("auth", refreshToken, {
-    httpOnly: true,
-  });
+  response.setHeader("Set-Cookie", "x-access-token=" + refreshToken);
+  response.setHeader("SameSite", "None");
 
   response.status(200).json({
     message: "Logged in successfully",

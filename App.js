@@ -6,10 +6,11 @@ const cors = require("cors");
 const app = express();
 const GlobalErrorHandler = require("./Utils/GlobalErrorHandler");
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
 
-// global middlewares
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/product", productRoute);

@@ -12,8 +12,6 @@ module.exports = CatchAsync(async (request, response, next) => {
     token = request.headers.authorization.split(" ")[1];
   }
 
-  console.log(token);
-
   if (!token) return next(new AppError("Please provide an access token"));
 
   const decode = jwt.decode(token);

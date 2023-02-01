@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const CatchAsync = require("../Utils/CatchAsync");
 
 exports.issueAccessToken = (payload) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
