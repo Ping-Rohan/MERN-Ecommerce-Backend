@@ -6,8 +6,7 @@ const issueJwt = require("./IssueJWT");
 
 module.exports = CatchAsync(async (request, response, next) => {
   let refreshToken;
-  if (request.cookies[`x-access-token`])
-    refreshToken = request.cookies[`x-access-token`];
+  if (request.cookies.auth) refreshToken = request.cookies.auth;
 
   console.log(refreshToken);
 
@@ -22,7 +21,13 @@ module.exports = CatchAsync(async (request, response, next) => {
   const newRefreshToken = issueJwt.issueRefreshToken({ _id: document._id });
   const newAccessToken = issueJwt.issueAccessToken({ _id: document._id });
 
-  response.setHeader("Set-Cookie", "x-access-token=" + refreshToken);
+  response.clearCookie("auth");
+  response.cookie("auth", newRefreshToken, {
+    sameSite: "none",
+    httpOnly: true,
+    secure: true,
+  });
+
   response.status(200).json({
     newAccessToken,
   });
